@@ -1,0 +1,16 @@
+**/build
+**/dist
+**/*.orig
+**/.gradle
+**/.idea/
+**/.vscode
+**/node_modules
+**/jspm_packages
+**/npm-debug.log
+**/*.iml
+**.project
+**.settings
+**.classpath
+**/target
+**/log
+**/bin

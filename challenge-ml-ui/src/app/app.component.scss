@@ -1,0 +1,39 @@
+.container {
+  margin: 15px 15px;
+}
+
+.w-100 {
+  width: 100%;
+}
+
+.img-avatar {
+  width: inherit;
+  height: inherit;
+}
+
+.loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  z-index: 100;
+  width: 100%;
+  height: 100%;
+}
+
+.bc-primary {
+  background-color: #dce0d9;
+}
+
+.card-data {
+  margin-top: 1rem;
+}
+
+.align-item-center {
+  align-items: center;
+}
+
+.error-msg {
+  margin-top: -15px;
+  color: #f44336;
+}

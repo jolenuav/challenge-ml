@@ -1,0 +1,159 @@
+<div *ngIf="showLoader" class="loader">
+  <mat-spinner></mat-spinner>
+</div>
+
+<mat-card class="container bc-primary">
+  <mat-card-header>
+    <mat-card-title>Search Country</mat-card-title>
+    <mat-card-subtitle>By IP</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+      <div>
+        <mat-form-field>
+          <mat-label>Address IP</mat-label>
+          <input
+            matInput
+            type="text"
+            [formControl]="ipControl"
+            (blur)="validateIP()"
+          />
+          <mat-error *ngIf="ipControl.hasError('required')">
+            Please enter a valid IP address
+          </mat-error>
+          <button
+            mat-button
+            *ngIf="ipControl.value"
+            matSuffix
+            mat-icon-button
+            aria-label="Clear"
+            (click)="ipControl.setValue(null)"
+          >
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+        <button
+          mat-icon-button
+          color="primary"
+          (click)="callService()"
+          [disabled]="disabledButtom"
+        >
+          <mat-icon>search</mat-icon>
+        </button>
+      </div>
+
+      <mat-card class="card-data">
+        <mat-card-header>
+          <mat-card-subtitle>Distance Max</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content class="mat-card-header-text">
+          <div class="mat-card-title">{{ distanceMax }}</div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="card-data">
+        <mat-card-header>
+          <mat-card-subtitle>Distance Min</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content class="mat-card-header-text">
+          <div class="mat-card-title">{{ distanceMin }}</div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="card-data">
+        <mat-card-header>
+          <mat-card-subtitle>Distance Average</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content class="mat-card-header-text">
+          <div class="mat-card-title">{{ distanceAvg }}</div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <div *ngIf="countries.length > 0">
+      <ng-container *ngFor="let country of countries">
+        <mat-accordion class="example-headers-align" multi>
+          <mat-expansion-panel style="margin: 0.5rem 0">
+            <mat-expansion-panel-header>
+              <div mat-card-avatar class="align-item-center">
+                <img class="img-avatar" [src]="country.countryFlag" />
+              </div>
+              <mat-panel-title class="align-item-center">
+                {{ country.countryName }}
+              </mat-panel-title>
+              <mat-panel-description class="align-item-center">
+                Calls: {{ country.count }}
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <div fxLayout="row" fxLayoutAlign="space-between center">
+              <div fxLayout="column" fxFlex="30" outAlign="space-between start">
+                <mat-card class="card-data">
+                  <mat-card-header>
+                    <mat-card-subtitle>ISO Code</mat-card-subtitle>
+                  </mat-card-header>
+                  <mat-card-content class="mat-card-header-text">
+                    <div class="mat-card-title">{{ country.countryISO }}</div>
+                  </mat-card-content>
+                </mat-card>
+                <mat-card class="card-data">
+                  <mat-card-header>
+                    <mat-card-subtitle>Currency</mat-card-subtitle>
+                  </mat-card-header>
+                  <mat-card-content class="mat-card-header-text">
+                    <div class="mat-card-title">{{ country.currency }}</div>
+                  </mat-card-content>
+                </mat-card>
+              </div>
+
+              <div fxLayout="column" fxFlex="30" outAlign="space-between start">
+                <mat-card class="card-data">
+                  <mat-card-header>
+                    <mat-card-subtitle>Hour</mat-card-subtitle>
+                  </mat-card-header>
+                  <mat-card-content class="mat-card-header-text">
+                    <ng-container *ngFor="let hour of country.hours">
+                      <div class="mat-card-title">{{ hour }}</div>
+                    </ng-container>
+                  </mat-card-content>
+                </mat-card>
+                <mat-card class="card-data">
+                  <mat-card-header>
+                    <mat-card-subtitle>Language</mat-card-subtitle>
+                  </mat-card-header>
+                  <mat-card-content class="mat-card-header-text">
+                    <ng-container *ngFor="let language of country.languages">
+                      <div class="mat-card-title">{{ language.name }}</div>
+                    </ng-container>
+                  </mat-card-content>
+                </mat-card>
+              </div>
+
+              <div fxLayout="column" fxFlex="30" outAlign="space-between start">
+                <mat-card class="card-data">
+                  <mat-card-header>
+                    <mat-card-subtitle>Distance To BA</mat-card-subtitle>
+                  </mat-card-header>
+                  <mat-card-content class="mat-card-header-text">
+                    <div class="mat-card-title">
+                      {{ country.distanceBA }} Km
+                    </div>
+                  </mat-card-content>
+                </mat-card>
+                <mat-card class="card-data">
+                  <mat-card-header>
+                    <mat-card-subtitle>Exchange USD</mat-card-subtitle>
+                  </mat-card-header>
+                  <mat-card-content class="mat-card-header-text">
+                    <div class="mat-card-title">
+                      {{ convert(country.rate, country) }}
+                    </div>
+                  </mat-card-content>
+                </mat-card>
+              </div>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </ng-container>
+    </div>
+  </mat-card-content>
+</mat-card>
