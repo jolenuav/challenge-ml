@@ -5,3 +5,5 @@
 
 ## run
 * mvnw install
+* docker build -t challenge-ml-api:v1 .
+* docker run -P challenge-ml-api:v1
